@@ -1,0 +1,136 @@
+LIMELIGHT SDK LICENSE AGREEMENT
+
+1. NO WARRANTY, LIMITATION OF LIABILITY, BINDING AGREEMENT 
+AND ADDITIONAL TERMS AND AGREEMENTS.
+
+1.1 NO WARRANTY. YOU ACKNOWLEDGE THAT THE SDK (AS DEFINED BELOW) MAY BE 
+PRONE TO BUGS AND/OR STABILITY ISSUES. THE SDK IS PROVIDED TO YOU “AS IS,” AND 
+LIMELIGHT AND ITS SUPPLIERS DISCLAIM ANY WARRANTY OR LIABILITY OBLIGATIONS TO 
+YOU OF ANY KIND. YOU ACKNOWLEDGE THAT LIMELIGHT MAKES NO EXPRESS, IMPLIED, 
+OR STATUTORY WARRANTY OF ANY KIND WITH RESPECT TO THE SDK INCLUDING ANY 
+WARRANTY WITH REGARD TO PERFORMANCE, MERCHANTABILITY, SATISFACTORY 
+QUALITY, NONINFRINGEMENT OR FITNESS FOR ANY PARTICULAR PURPOSE. YOU BEAR THE 
+ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SDK AND YOUR USE OF AND 
+OUTPUT FROM THE SDK. LIMELIGHT IS NOT OBLIGATED TO PROVIDE MAINTENANCE,
+TECHNICAL SUPPORT OR UPDATES TO YOU FOR ANY PORTION OF THE SDK. THE FOREGOING 
+LIMITATIONS, EXCLUSIONS AND LIMITATIONS SHALL APPLY TO THE MAXIMUM EXTENT 
+PERMITTED BY APPLICABLE LAW, EVEN IF ANY REMEDY FAILS ITS ESSENTIAL PURPOSE.
+1.2 LIMITATION OF LIABILITY. IN NO EVENT WILL LIMELIGHT OR ITS SUPPLIERS BE LIABLE 
+TO YOU FOR ANY LOSSES, DAMAGES, CLAIMS OR COSTS WHATSOEVER INCLUDING ANY 
+CONSEQUENTIAL, INDIRECT OR INCIDENTAL DAMAGES, ANY LOST PROFITS OR LOST 
+SAVINGS, ANY DAMAGES RESULTING FROM BUSINESS INTERRUPTION, PERSONAL INJURY 
+OR FAILURE TO MEET ANY DUTY OF CARE, OR CLAIMS BY A THIRD PARTY EVEN IF AN 
+LIMELIGHT REPRESENTATIVE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH LOSSES, 
+DAMAGES, CLAIMS OR COSTS. THE FOREGOING LIMITATIONS AND EXCLUSIONS APPLY TO 
+THE EXTENT PERMITTED BY APPLICABLE LAW IN YOUR JURISDICTION. LIMELIGHT’S 
+AGGREGATE LIABILITY AND THAT OF ITS SUPPLIERS UNDER OR IN CONNECTION WITH THIS 
+AGREEMENT SHALL BE LIMITED TO THE AMOUNT PAID FOR THE SDK, IF ANY. THIS 
+LIMITATION ON LIMELIGHT AND ITS SUPPLIERS WILL APPLY EVEN IN THE EVENT OF A 
+FUNDAMENTAL OR MATERIAL BREACH OR A BREACH OF THE FUNDAMENTAL OR MATERIAL 
+TERMS OF THIS AGREEMENT. 
+
+1.3 Binding Agreement. This agreement governs installation and use of the SDK. You agree that this 
+agreement is like any written negotiated agreement signed by you. By downloading, installing, copying, 
+or modifying all or any portion of the SDK, you accept all of the terms and conditions of this agreement. 
+This agreement is enforceable against you and any legal entity that obtained the SDK and on whose 
+behalf they are used: for example, your employer. If you do not agree to the terms of this agreement, do 
+not use the SDK.
+
+2. DEFINITIONS.
+
+“LIMELIGHT” means LIMELIGHT NETWORKS, INC., 222 S. Mill Avenue, Suite 800, Tempe, Arizona 85281.
+
+“Developer Application” means your application software that complies with the requirements of this 
+agreement and operates exclusively with Limelight’s services.
+
+“Documentation” means the written materials accompanying this agreement, including, for example, technical 
+specifications, file format documentation and application programming interface (API) information.
+
+“Effective Date” means the date that you download or otherwise access the SDK.
+
+“SDK” means SDK Source Files and Sample Code.
+
+“SDK Source Files” means source code files included in the directory “frameworks” that accompany this 
+agreement.
+
+“Sample Code” means sample software in source code format designated in the Documentation or directories 
+as “sample code,” “samples,” “sample application code,” “quickstart code” or “snippets.”
+
+3. LICENSE.
+
+Subject to the terms and conditions of this agreement, including the requirements and restrictions below, 
+LIMELIGHT grants you the non-exclusive, non-transferable right to use the SDK in accordance with the 
+Documentation as follows:
+
+3.1 Installation, Use and Copying. You may install and use the Build Tools and Runtime Components solely 
+for purpose of developing compliant Developer Applications. You may make a limited and reasonable number 
+of copies of the SDK for purposes of your internal development of Developer Applications.
+
+3.2 Modification. You may modify the Sample Code and SDK Source Files provided to you in human readable 
+(i.e., source code) format. 
+
+4. INDEMNIFICATION.
+
+You agree to hold LIMELIGHT harmless from any and all liabilities, losses, actions, damages or claims 
+(including product liability, warranty and intellectual property claims, and all reasonable expenses, costs and 
+attorneys fees) arising out of or relating to your distribution of all or any portion of the SDK or any Developer 
+Application; provided that LIMELIGHT cooperates with you, at your expense, in resolving any such claim.
+
+5. INTELLECTUAL PROPERTY RIGHTS.
+
+The SDK and any copies that you are authorized by LIMELIGHT to make are the intellectual property of and 
+are owned by LIMELIGHT. The structure, organization and code of the SDK provided to you in compiled or 
+object code form are the valuable trade secrets and confidential information of LIMELIGHT. The SDK is 
+protected by copyright, including by United States Copyright Law, international treaty provisions and 
+applicable laws in the country in which they are used. Except as expressly stated herein, this agreement does 
+not grant you any intellectual property rights in the SDK and all rights not expressly granted are reserved by 
+LIMELIGHT.
+
+6. REVERSE ENGINEERING.
+
+You will not reverse engineer, decompile, disassemble or otherwise attempt to discover the source code of all 
+or any portion of the SDK provided to you in compiled or object code format except to the extent you may be 
+expressly permitted to decompile under applicable law.
+
+7. NON-BLOCKING OF LIMELIGHT DEVELOPMENT.
+
+You acknowledge that LIMELIGHT is currently developing or may develop technologies and products in the 
+future that have or may have design and/or functionality similar to products that you may develop based on 
+your license herein. Nothing in this agreement shall impair, limit or curtail LIMELIGHT’s right to continue 
+with its development, maintenance and/or distribution of LIMELIGHT’s technology or products. You agree 
+that you shall not assert in any way any patent owned by you arising out of or in connection with the SDK or 
+modifications made thereto against LIMELIGHT, its subsidiaries or affiliates, or their customers, direct or 
+indirect, agents and contractors for the manufacture, use, import, licensing, offer for sale or sale of any 
+LIMELIGHT products.
+
+8. TERM AND TERMINATION.
+
+This agreement will commence upon the Effective Date and continue in perpetuity unless terminated as set 
+forth herein. LIMELIGHT may terminate this agreement immediately if you breach any of its terms. 
+Sections 1, 2, 4, 5, 6, 7, 8, 9, 10, and 11 will survive any termination of this agreement. Upon termination of 
+this agreement, you will cease all use and distribution of the SDK and return to LIMELIGHT or destroy (with 
+written confirmation of destruction) the SDK promptly at LIMELIGHT’s request, together with any copies 
+thereof.
+
+9. TRADEMARK.
+
+“Limelight Network, Inc.” is a trademark of LIMELIGHT that may not be used by others except under a 
+written license from LIMELIGHT. You may not incorporate any LIMELIGHT trademark, in whole or in part, 
+in the title of your Developer Application or in your company name, domain name or the name of a service 
+related to LIMELIGHT. 
+
+10. GOVERNING LAW.
+
+The courts of Maricopa County, Arizona shall have non-exclusive jurisdiction over all disputes relating to this 
+agreement. This agreement will not be governed by the conflict of law rules of any jurisdiction or the United 
+Nations Convention on Contracts for the International Sale of Goods, the application of which is expressly 
+excluded.
+
+11. GENERAL PROVISIONS.
+
+If any part of this agreement is found void and unenforceable, it will not affect the validity of the balance of 
+this agreement, which will remain valid and enforceable according to its terms. Updates may be licensed to 
+you by LIMELIGHT with additional or different terms. The use of “includes” or “including” in this agreement 
+shall mean “including without limitation.” This is the entire agreement between LIMELIGHT and you relating 
+to the SDK and it supersedes any prior representations, discussions, undertakings, communications or 
+advertising relating to the SDK.
