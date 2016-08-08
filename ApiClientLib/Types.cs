@@ -86,7 +86,7 @@ namespace ApiClientLib
 
     public class ListDirResults : List<ListDirResult>
     {
-        public int Cookie;
+        public long Cookie;
 
         public ListDirResults FromJsonObject(object obj)
         {
@@ -127,7 +127,7 @@ namespace ApiClientLib
 
     public class ListFileResults : List<ListFileResult>
     {
-        public int Cookie;
+        public long Cookie;
 
         public ListFileResults FromJsonObject(object obj)
         {
