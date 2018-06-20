@@ -1,8 +1,8 @@
-﻿using Jayrock.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace ApiClientLib
 {
@@ -57,8 +57,8 @@ namespace ApiClientLib
                 var codeGetter = new DictCodeGetter();
                 var result = this.rpcRetry.Invoke("completeMultipart", argMaker, codeGetter);
 
-                var dict = (JsonObject)result;
-                return ((JsonNumber)dict["numpieces"]).ToInt32();
+                var dict = (JObject)result;
+                return dict.GetValue("numpieces").ToObject<int>();
             }
             catch (ApiException)
             {

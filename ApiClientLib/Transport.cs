@@ -1,9 +1,10 @@
-﻿using Jayrock.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ApiClientLib
 {
@@ -38,11 +39,12 @@ namespace ApiClientLib
             {
                 using (var writer = new StreamWriter(stream))
                 {
-                    var call = new JsonObject();
-                    call["id"] = ++this.lastId;
-                    call["method"] = method;
-                    call["params"] = args;
-                    call.Export(new JsonTextWriter(writer));
+                    JObject call = new JObject(
+                        new JProperty("id", ++this.lastId),
+                        new JProperty("method", method),
+                        new JProperty("params", args)
+                    );
+                    writer.Write(call.ToString());
                 }
             }
 
@@ -52,11 +54,9 @@ namespace ApiClientLib
                 {
                     using (var reader = new StreamReader(stream, Encoding.UTF8))
                     {
-                        var answer = new JsonObject();
-                        answer.Import(new JsonTextReader(reader));
-
+                        JObject answer = JObject.Parse(reader.ReadToEnd());
                         var errorObject = answer["error"];
-                        if (errorObject != null)
+                        if (errorObject.Type != JTokenType.Null)
                         {
                             throw new JsonException(errorObject.ToString());
                         }

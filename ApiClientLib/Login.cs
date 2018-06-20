@@ -1,5 +1,5 @@
-﻿using Jayrock.Json;
-using System;
+﻿using System;
+using Newtonsoft.Json.Linq;
 
 namespace ApiClientLib
 {
@@ -35,7 +35,7 @@ namespace ApiClientLib
             try
             {
                 result = this.transport.Invoke("login", this.user, this.password, true);
-                this.LoginResult = new LoginResult().FromJsonObject((JsonArray)result);
+                this.LoginResult = new LoginResult().FromJsonObject((JArray)result);
                 return this.LoginResult;
             }
             catch (Exception ex)
