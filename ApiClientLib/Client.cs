@@ -84,7 +84,7 @@ namespace ApiClientLib
                 headers = new Dictionary<string, string>();
             }
 
-            AddDirectoryAndBasename(remotePath, headers);           
+            AddDirectoryAndBasename(remotePath, headers);
             var dataStream = new MemoryStream();
 
             var respHeaders = this.httpRetry.Invoke(this.urls.MpCreate, dataStream, remotePath, headers);

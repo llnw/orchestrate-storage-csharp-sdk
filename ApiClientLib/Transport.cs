@@ -18,11 +18,11 @@ namespace ApiClientLib
     public class JsonTransport :IJsonTransport
     {
         private int lastId;
-        private string url;
+        private Uri url;
         private int timeout;
 
-        public JsonTransport(string url) : this(url, 30000) {}
-        public JsonTransport(string url, int timeout)
+        public JsonTransport(Uri url) : this(url, 30000) {}
+        public JsonTransport(Uri url, int timeout)
         {
             this.url = url;
             this.lastId = 1;
@@ -70,7 +70,7 @@ namespace ApiClientLib
 
     public interface IHttpTransport
     {
-        WebHeaderCollection Post(string apiUrl, string token, Stream dataStream, string tag, Dictionary<string, string> headers);
+        WebHeaderCollection Post(Uri apiUrl, string token, Stream dataStream, string tag, Dictionary<string, string> headers);
     }
 
     public class HttpTransport : IHttpTransport
@@ -82,7 +82,7 @@ namespace ApiClientLib
             this.timeout = timeout;
         }
 
-        public WebHeaderCollection Post(string apiUrl, string token, Stream dataStream, string tag, Dictionary<string, string> headers)
+        public WebHeaderCollection Post(Uri apiUrl, string token, Stream dataStream, string tag, Dictionary<string, string> headers)
         {
             var request = HttpWebRequest.Create(apiUrl);
             request.Timeout = this.timeout;

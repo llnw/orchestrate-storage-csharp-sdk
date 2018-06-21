@@ -115,8 +115,8 @@ namespace ApiClientLib
             var oType = 2;
             if (json.TryGetValue("type", out typeToken))
                 oType = json["type"].ToObject<Int32>();
-            
-            if (stat.Type != JTokenType.Null)
+
+            if ((stat != null) && (stat.Type != JTokenType.Null))
             {
                 this.Ctime = stat["ctime"].ToObject<Int32>();
                 this.Gid = stat["gid"].ToObject<Int32>();
@@ -156,7 +156,7 @@ namespace ApiClientLib
             this.Name = (string)json["name"];
             this.Type = json["type"].ToObject<Int32>();
 
-            if (stat.Type != JTokenType.Null)
+            if ((stat != null) && (stat.Type != JTokenType.Null))
             {
                 this.Checksum = (string)stat["checksum"];
                 this.Ctime = stat["ctime"].ToObject<Int32>();
@@ -208,8 +208,8 @@ namespace ApiClientLib
         {
             var stat = (JObject)json["stat"];
             this.Name = (string)json["name"];
-           
-            if (stat.Type != JTokenType.Null)
+
+            if ((stat != null) && (stat.Type != JTokenType.Null))
             {
                 this.Checksum = (string)stat["hash"];
                 this.Ctime = stat["ctime"].ToObject<Int32>();
@@ -362,21 +362,23 @@ namespace ApiClientLib
 
     public class Urls
     {
-        public string PostRaw;
-        public string PostForm;
-        public string RpcUrl;
-        public string MpPiece;
-        public string MpCreate;
-        public string MpComplete;
+        public Uri PostRaw;
+        public Uri PostForm;
+        public Uri RpcUrl;
+        public Uri MpPiece;
+        public Uri MpCreate;
+        public Uri MpComplete;
 
         public Urls(string apiUrl)
         {
-            this.PostRaw = apiUrl + "/post/raw";
-            this.PostForm = apiUrl + "/post/file";
-            this.RpcUrl = apiUrl + "/jsonrpc";
-            this.MpPiece = apiUrl + "/multipart/piece";
-            this.MpCreate = apiUrl + "/multipart/create";
-            this.MpComplete = apiUrl + "/multipart/complete";
+            Uri baseApiUrl = new Uri(apiUrl);
+
+            this.PostRaw = new Uri(baseApiUrl, "/post/raw");
+            this.PostForm = new Uri(baseApiUrl, "/post/file");
+            this.RpcUrl = new Uri(baseApiUrl, "/jsonrpc");
+            this.MpPiece = new Uri(baseApiUrl, "/multipart/piece");
+            this.MpCreate = new Uri(baseApiUrl, "/multipart/create");
+            this.MpComplete = new Uri(baseApiUrl, "/multipart/complete");
         }
     }
 

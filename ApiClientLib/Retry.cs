@@ -58,7 +58,7 @@ namespace ApiClientLib
 
     public interface IHttpRetry
     {
-        WebHeaderCollection Invoke(string apiUrl, Stream dataStream, string tag, Dictionary<string, string> headers);
+        WebHeaderCollection Invoke(Uri apiUrl, Stream dataStream, string tag, Dictionary<string, string> headers);
     }
 
     public class HttpRetry : IHttpRetry
@@ -75,7 +75,7 @@ namespace ApiClientLib
             this.maxTries = tries;
         }
 
-        public WebHeaderCollection Invoke(string apiUrl, Stream dataStream, string tag, Dictionary<string,string> headers) 
+        public WebHeaderCollection Invoke(Uri apiUrl, Stream dataStream, string tag, Dictionary<string,string> headers) 
         {
             int lastHttpStatus = HttpCode.Forbidden;
             int lastAgileStatus = -1;
