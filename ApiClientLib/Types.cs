@@ -14,10 +14,6 @@ namespace ApiClientLib
 
         public LoginResult FromJsonObject(JArray json)
         {
-            if (json.Count == 2 && json[0] == null && json[1] == null)
-            {
-                throw new LoginException(json.ToString());
-            }
             this.Token = (string)json[0];
             var userInfo = json[1].ToObject<JObject>();
             this.Gid = userInfo["gid"].ToObject<Int32>();
@@ -86,12 +82,12 @@ namespace ApiClientLib
 
     public class ListDirResults : List<ListDirResult>
     {
-        public int Cookie;
+        public ulong Cookie;
 
         public ListDirResults FromJsonObject(object obj)
         {
             var json = (JObject)obj;
-            this.Cookie = json["cookie"].ToObject<Int32>();
+            this.Cookie = json["cookie"].ToObject<UInt64>();
             var list = (JArray)json["list"];
             this.Clear();
 
@@ -129,12 +125,12 @@ namespace ApiClientLib
 
     public class ListFileResults : List<ListFileResult>
     {
-        public int Cookie;
+        public ulong Cookie;
 
         public ListFileResults FromJsonObject(object obj)
         {
             var json = (JObject)obj;
-            this.Cookie = json["cookie"].ToObject<Int32>();
+            this.Cookie = json["cookie"].ToObject<UInt64>();
             var list = (JArray)json["list"];
             this.Clear();
 
