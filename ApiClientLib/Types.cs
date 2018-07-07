@@ -1,7 +1,7 @@
-﻿using Jayrock.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace ApiClientLib
 {
@@ -12,16 +12,12 @@ namespace ApiClientLib
         public int Uid;
         public string Path;
 
-        public LoginResult FromJsonObject(JsonArray json)
+        public LoginResult FromJsonObject(JArray json)
         {
-            if (json.Length == 2 && json[0] == null && json[1] == null)
-            {
-                throw new LoginException(json.ToString());
-            }
             this.Token = (string)json[0];
-            var userInfo = (JsonObject)json[1];
-            this.Gid = ((JsonNumber)userInfo["gid"]).ToInt32();
-            this.Uid = ((JsonNumber)userInfo["uid"]).ToInt32();
+            var userInfo = json[1].ToObject<JObject>();
+            this.Gid = userInfo["gid"].ToObject<Int32>();
+            this.Uid = userInfo["uid"].ToObject<Int32>();
             this.Path = (string)userInfo["path"];
             return this;
         }
@@ -68,34 +64,34 @@ namespace ApiClientLib
 
         public StatResult FromJsonObject(object obj)
         {
-            var json = (JsonObject)obj;
-            this.Code = ((JsonNumber)json["code"]).ToInt32();
-            this.Ctime = ((JsonNumber)json["ctime"]).ToInt32();
+            var json = (JObject)obj;
+            this.Code = json["code"].ToObject<Int32>();
+            this.Ctime = json["ctime"].ToObject<Int32>();
             this.Checksum = (string)json["checksum"];
-            this.Gid = ((JsonNumber)json["gid"]).ToInt32();
-            this.Mtime = ((JsonNumber)json["mtime"]).ToInt32();           
-            this.Type = ((JsonNumber)json["type"]).ToInt32();
+            this.Gid = json["gid"].ToObject<Int32>();
+            this.Mtime = json["mtime"].ToObject<Int32>();
+            this.Type = json["type"].ToObject<Int32>();
             if (this.Type == 2)
             {
-                this.Size = ((JsonNumber)json["size"]).ToInt64();
+                this.Size = json["size"].ToObject<Int64>();
             }
-            this.Uid = ((JsonNumber)json["uid"]).ToInt32();
+            this.Uid = json["uid"].ToObject<Int32>();
             return this;
         }
     }
 
     public class ListDirResults : List<ListDirResult>
     {
-        public int Cookie;
+        public ulong Cookie;
 
         public ListDirResults FromJsonObject(object obj)
         {
-            var json = (JsonObject)obj;
-            this.Cookie = ((JsonNumber)json["cookie"]).ToInt32();
-            var list = (JsonArray)json["list"];
+            var json = (JObject)obj;
+            this.Cookie = json["cookie"].ToObject<UInt64>();
+            var list = (JArray)json["list"];
             this.Clear();
 
-            foreach (JsonObject item in list)
+            foreach (JObject item in list)
             {
                 this.Add(new ListDirResult().FromJsonObject(item));
             }
@@ -107,19 +103,21 @@ namespace ApiClientLib
     {
         public string Name;
 
-        public ListDirResult FromJsonObject(JsonObject json)
+        public ListDirResult FromJsonObject(JObject json)
         {
-            var stat = (JsonObject)json["stat"];
+            var stat = (JObject)json["stat"];
             this.Name = (string)json["name"];
+            JToken typeToken = null;
+            var oType = 2;
+            if (json.TryGetValue("type", out typeToken))
+                oType = json["type"].ToObject<Int32>();
 
-            var oType = json.Contains("type") ? ((JsonNumber)json["type"]).ToInt32() : 2;
-            
-            if (stat != null)
+            if ((stat != null) && (stat.Type != JTokenType.Null))
             {
-                this.Ctime = ((JsonNumber)stat["ctime"]).ToInt32();
-                this.Gid = ((JsonNumber)stat["gid"]).ToInt32();
-                this.Mtime = ((JsonNumber)stat["mtime"]).ToInt32();
-                this.Uid = ((JsonNumber)stat["uid"]).ToInt32();
+                this.Ctime = stat["ctime"].ToObject<Int32>();
+                this.Gid = stat["gid"].ToObject<Int32>();
+                this.Mtime = stat["mtime"].ToObject<Int32>();
+                this.Uid = stat["uid"].ToObject<Int32>();
             }
             return this;
         }
@@ -127,16 +125,16 @@ namespace ApiClientLib
 
     public class ListFileResults : List<ListFileResult>
     {
-        public int Cookie;
+        public ulong Cookie;
 
         public ListFileResults FromJsonObject(object obj)
         {
-            var json = (JsonObject)obj;
-            this.Cookie = ((JsonNumber)json["cookie"]).ToInt32();
-            var list = (JsonArray)json["list"];
+            var json = (JObject)obj;
+            this.Cookie = json["cookie"].ToObject<UInt64>();
+            var list = (JArray)json["list"];
             this.Clear();
 
-            foreach (JsonObject item in list)
+            foreach (JObject item in list)
             {
                 this.Add(new ListFileResult().FromJsonObject(item));
             }
@@ -148,21 +146,21 @@ namespace ApiClientLib
     {
         public string ContentType;
 
-        public ListFileResult FromJsonObject(JsonObject json)
+        public ListFileResult FromJsonObject(JObject json)
         {
-            var stat = (JsonObject)json["stat"];
+            var stat = (JObject)json["stat"];
             this.Name = (string)json["name"];
-            this.Type = ((JsonNumber)json["type"]).ToInt32();
+            this.Type = json["type"].ToObject<Int32>();
 
-            if (stat != null)
+            if ((stat != null) && (stat.Type != JTokenType.Null))
             {
                 this.Checksum = (string)stat["checksum"];
-                this.Ctime = ((JsonNumber)stat["ctime"]).ToInt32();
-                this.Gid = ((JsonNumber)stat["gid"]).ToInt32();
+                this.Ctime = stat["ctime"].ToObject<Int32>();
+                this.Gid = stat["gid"].ToObject<Int32>();
                 this.ContentType = (string)stat["mimetype"];
-                this.Mtime = ((JsonNumber)stat["mtime"]).ToInt32();
-                this.Size = ((JsonNumber)stat["size"]).ToInt64();
-                this.Uid = ((JsonNumber)stat["uid"]).ToInt32();
+                this.Mtime = stat["mtime"].ToObject<Int32>();
+                this.Size = stat["size"].ToObject<Int64>();
+                this.Uid = stat["uid"].ToObject<Int32>();
             }
             return this;
         }
@@ -176,21 +174,21 @@ namespace ApiClientLib
 
         public ListPathResults FromJsonObject(object obj)
         {
-            var json = (JsonObject)obj;
+            var json = (JObject)obj;
             this.Cookie = (string)json["cookie"];
          
-            var dirs = (JsonArray)json["dirs"];
+            var dirs = (JArray)json["dirs"];
             
-            foreach (JsonObject dir in dirs)
+            foreach (JObject dir in dirs)
             {
                 var dirResult = new ListDirResult();
                 dirResult.FromJsonObject(dir);
                 this.Dirs.Add(dirResult);
             }
 
-            var files = (JsonArray)json["files"];
+            var files = (JArray)json["files"];
 
-            foreach (JsonObject file in files)
+            foreach (JObject file in files)
             {
                 this.Files.Add(new ListPathFileResult().FromJsonObject(file));
             }
@@ -202,20 +200,20 @@ namespace ApiClientLib
     {
         public int ContentType;
 
-        public ListPathFileResult FromJsonObject(JsonObject json)
+        public ListPathFileResult FromJsonObject(JObject json)
         {
-            var stat = (JsonObject)json["stat"];
+            var stat = (JObject)json["stat"];
             this.Name = (string)json["name"];
-           
-            if (stat != null)
+
+            if ((stat != null) && (stat.Type != JTokenType.Null))
             {
                 this.Checksum = (string)stat["hash"];
-                this.Ctime = ((JsonNumber)stat["ctime"]).ToInt32();
-                this.ContentType = ((JsonNumber)stat["ctype"]).ToInt32();                
-                this.Gid = ((JsonNumber)stat["gid"]).ToInt32();
-                this.Mtime = ((JsonNumber)stat["mtime"]).ToInt32();
-                this.Size = ((JsonNumber)stat["size"]).ToInt64();
-                this.Uid = ((JsonNumber)stat["uid"]).ToInt32();
+                this.Ctime = stat["ctime"].ToObject<Int32>();
+                this.ContentType = stat["ctype"].ToObject<Int32>();
+                this.Gid = stat["gid"].ToObject<Int32>();
+                this.Mtime = stat["mtime"].ToObject<Int32>();
+                this.Size = stat["size"].ToObject<Int64>();
+                this.Uid = stat["uid"].ToObject<Int32>();
             }
             return this;
         }
@@ -234,13 +232,13 @@ namespace ApiClientLib
 
         public MultipartInfo FromJsonObject(object obj)
         {
-            var json = (JsonObject)obj;
-            this.Created = ((JsonNumber)json["created"]).ToInt32();
-            this.Mtime = ((JsonNumber)json["mtime"]).ToInt32();
-            this.NumPieces = ((JsonNumber)json["numpieces"]).ToInt32();
-            this.State = ((JsonNumber)json["state"]).ToInt32();
+            var json = (JObject)obj;
+            this.Created = json["created"].ToObject<Int32>();
+            this.Mtime = json["mtime"].ToObject<Int32>();
+            this.NumPieces = json["numpieces"].ToObject<Int32>();
+            this.State = json["state"].ToObject<Int32>();
             this.ContentType = (string)json["content_type"];
-            this.Error = ((JsonNumber)json["error"]).ToInt32();
+            this.Error = json["error"].ToObject<Int32>();
             this.Path = (string)json["path"];
             return this;
         }
@@ -252,12 +250,12 @@ namespace ApiClientLib
 
         public MultipartResults FromJsonObject(object obj)
         {
-            var json = (JsonObject)obj;
-            this.Cookie = ((JsonNumber)json["cookie"]).ToInt32();
+            var json = (JObject)obj;
+            this.Cookie = json["cookie"].ToObject<Int32>();
 
-            var list = (JsonArray)json["multipart"];
+            var list = (JArray)json["multipart"];
 
-            foreach (JsonObject item in list)
+            foreach (JObject item in list)
             {
                 var mpResult = new MultipartResult();
                 mpResult.FromJsonObject(item);
@@ -275,18 +273,18 @@ namespace ApiClientLib
         public string MpId;
         public int Mtime;
         public string Path;
-        public int State;        
+        public int State;
         public int Uid;
 
-        public MultipartResult FromJsonObject(JsonObject json)
+        public MultipartResult FromJsonObject(JObject json)
         {        
-            this.Error = ((JsonNumber)json["error"]).ToInt32();
-            this.Gid = ((JsonNumber)json["gid"]).ToInt32();
+            this.Error = json["error"].ToObject<Int32>();
+            this.Gid = json["gid"].ToObject<Int32>();
             this.MpId = (string)json["mpid"];
-            this.Mtime = ((JsonNumber)json["mtime"]).ToInt32();
-            this.Path = (string)json["path"];            
-            this.State = ((JsonNumber)json["state"]).ToInt32();
-            this.Uid = ((JsonNumber)json["uid"]).ToInt32();                    
+            this.Mtime = json["mtime"].ToObject<Int32>();
+            this.Path = (string)json["path"];
+            this.State = json["state"].ToObject<Int32>();
+            this.Uid = json["uid"].ToObject<Int32>();
             return this;
         }
     }
@@ -297,12 +295,12 @@ namespace ApiClientLib
 
         public MultipartPieceResults FromJsonObject(object obj)
         {
-            var json = (JsonObject)obj;
-            this.Cookie = ((JsonNumber)json["cookie"]).ToInt32();
+            var json = (JObject)obj;
+            this.Cookie = json["cookie"].ToObject<Int32>();
 
-            var list = (JsonArray)json["pieces"];
+            var list = (JArray)json["pieces"];
 
-            foreach (JsonObject item in list)
+            foreach (JObject item in list)
             {
                 var mpResult = new MultipartPieceResult();
                 mpResult.FromJsonObject(item);
@@ -319,11 +317,11 @@ namespace ApiClientLib
         public int Number;
         public int State;
 
-        public MultipartPieceResult FromJsonObject(JsonObject json)
+        public MultipartPieceResult FromJsonObject(JObject json)
         {
-            this.Error = ((JsonNumber)json["error"]).ToInt32();
-            this.Number = ((JsonNumber)json["number"]).ToInt32();
-            this.State = ((JsonNumber)json["state"]).ToInt32();
+            this.Error = json["error"].ToObject<Int32>();
+            this.Number = json["number"].ToObject<Int32>();
+            this.State = json["state"].ToObject<Int32>();
             return this;
         }
     }
@@ -360,21 +358,23 @@ namespace ApiClientLib
 
     public class Urls
     {
-        public string PostRaw;
-        public string PostForm;
-        public string RpcUrl;
-        public string MpPiece;
-        public string MpCreate;
-        public string MpComplete;
+        public Uri PostRaw;
+        public Uri PostForm;
+        public Uri RpcUrl;
+        public Uri MpPiece;
+        public Uri MpCreate;
+        public Uri MpComplete;
 
         public Urls(string apiUrl)
         {
-            this.PostRaw = apiUrl + "/post/raw";
-            this.PostForm = apiUrl + "/post/file";
-            this.RpcUrl = apiUrl + "/jsonrpc";
-            this.MpPiece = apiUrl + "/multipart/piece";
-            this.MpCreate = apiUrl + "/multipart/create";
-            this.MpComplete = apiUrl + "/multipart/complete";
+            Uri baseApiUrl = new Uri(apiUrl);
+
+            this.PostRaw = new Uri(baseApiUrl, "/post/raw");
+            this.PostForm = new Uri(baseApiUrl, "/post/file");
+            this.RpcUrl = new Uri(baseApiUrl, "/jsonrpc");
+            this.MpPiece = new Uri(baseApiUrl, "/multipart/piece");
+            this.MpCreate = new Uri(baseApiUrl, "/multipart/create");
+            this.MpComplete = new Uri(baseApiUrl, "/multipart/complete");
         }
     }
 
@@ -383,6 +383,10 @@ namespace ApiClientLib
         public static int Success = 0;
         public static int DirNotFound = -1;
         public static int FileNotFound = -1;
+        public static int PathExists = -2;
+        public static int NoParentDir = -3;
+        public static int ServiceUnavailable = -5;
+        public static int InvalidPath = -8;
         public static int UnknownError = -999;
         public static int ExpiredToken = -10001;
     }

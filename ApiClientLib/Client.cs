@@ -1,8 +1,8 @@
-﻿using Jayrock.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace ApiClientLib
 {
@@ -57,8 +57,8 @@ namespace ApiClientLib
                 var codeGetter = new DictCodeGetter();
                 var result = this.rpcRetry.Invoke("completeMultipart", argMaker, codeGetter);
 
-                var dict = (JsonObject)result;
-                return ((JsonNumber)dict["numpieces"]).ToInt32();
+                var dict = (JObject)result;
+                return dict.GetValue("numpieces").ToObject<int>();
             }
             catch (ApiException)
             {
@@ -84,7 +84,7 @@ namespace ApiClientLib
                 headers = new Dictionary<string, string>();
             }
 
-            AddDirectoryAndBasename(remotePath, headers);           
+            AddDirectoryAndBasename(remotePath, headers);
             var dataStream = new MemoryStream();
 
             var respHeaders = this.httpRetry.Invoke(this.urls.MpCreate, dataStream, remotePath, headers);
@@ -254,7 +254,7 @@ namespace ApiClientLib
         {
             this.InvokeCodeBasedMethod("deleteDir", remotePath);
         }
-        
+
         /// <summary>
         /// deletes a file
         /// 
@@ -325,14 +325,14 @@ namespace ApiClientLib
         /// lists directories with in remotePath
         /// </summary>
         /// <param name="remotePath">full path in which to list directories</param>
-        /// <param name="pageOffset">offset from which to start listing items</param>
         /// <param name="pageSize">number of items per page</param>
+        /// <param name="cookie">cookie</param>
         /// <param name="includeStat">include stat data </param>
-        public ListDirResults ListDir(string remotePath, int pageSize, int pageOffset, bool includeStat)
+        public ListDirResults ListDir(string remotePath, int pageSize, ulong cookie, bool includeStat)
         {
             try
             {
-                var argMaker = new AutoTokenArgMaker(remotePath, pageSize, pageOffset, includeStat);
+                var argMaker = new AutoTokenArgMaker(remotePath, pageSize, cookie, includeStat);
                 var codeGetter = new DictCodeGetter();
                 var result = this.rpcRetry.Invoke("listDir", argMaker, codeGetter);
 
@@ -346,8 +346,8 @@ namespace ApiClientLib
             }
             catch (Exception ex)
             {
-                throw new UnknownApiException(string.Format("listDir failed with remotePath={0}, pageOffset={1}, pageSize={2}",
-                    remotePath, pageOffset, pageSize), ex);
+                throw new UnknownApiException(string.Format("listDir failed with remotePath={0}, pageSize={1}",
+                    remotePath, pageSize), ex);
             }
         }
 
@@ -355,14 +355,14 @@ namespace ApiClientLib
         /// lists files with in remotePath
         /// </summary>
         /// <param name="remotePath">full path in which to list files</param>
-        /// <param name="pageOffset">offset from which to start listing items</param>
         /// <param name="pageSize">number of items per page</param>
+        /// <param name="cookie">cookie</param>
         /// <param name="includeStat">include stat data </param>
-        public ListFileResults ListFile(string remotePath, int pageSize, int pageOffset, bool includeStat)
+        public ListFileResults ListFile(string remotePath, int pageSize, ulong cookie, bool includeStat)
         {
             try
             {
-                var argMaker = new AutoTokenArgMaker(remotePath, pageSize, pageOffset, includeStat);
+                var argMaker = new AutoTokenArgMaker(remotePath, pageSize, cookie, includeStat);
                 var codeGetter = new DictCodeGetter();
                 var result = this.rpcRetry.Invoke("listFile", argMaker, codeGetter);
                 
@@ -376,8 +376,8 @@ namespace ApiClientLib
             }
             catch (Exception ex)
             {
-                throw new UnknownApiException(string.Format("listFile failed with remotePath={0}, pageOffset={1}, pageSize={2}",
-                    remotePath, pageOffset, pageSize), ex);
+                throw new UnknownApiException(string.Format("listFile failed with remotePath={0}, pageSize={1}",
+                    remotePath, pageSize), ex);
 
             }
         }

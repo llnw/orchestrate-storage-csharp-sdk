@@ -1,9 +1,8 @@
-﻿
-using Jayrock.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace ApiClientLib
 {
@@ -59,7 +58,7 @@ namespace ApiClientLib
 
     public interface IHttpRetry
     {
-        WebHeaderCollection Invoke(string apiUrl, Stream dataStream, string tag, Dictionary<string, string> headers);
+        WebHeaderCollection Invoke(Uri apiUrl, Stream dataStream, string tag, Dictionary<string, string> headers);
     }
 
     public class HttpRetry : IHttpRetry
@@ -76,7 +75,7 @@ namespace ApiClientLib
             this.maxTries = tries;
         }
 
-        public WebHeaderCollection Invoke(string apiUrl, Stream dataStream, string tag, Dictionary<string,string> headers) 
+        public WebHeaderCollection Invoke(Uri apiUrl, Stream dataStream, string tag, Dictionary<string,string> headers) 
         {
             int lastHttpStatus = HttpCode.Forbidden;
             int lastAgileStatus = -1;
@@ -170,7 +169,7 @@ namespace ApiClientLib
         public int GetCode(object json) {
             try
             {
-                return ((JsonNumber)json).ToInt32();
+                return ((JToken)json).ToObject<Int32>();
             }
             catch
             {
@@ -185,8 +184,8 @@ namespace ApiClientLib
         {
             try
             {
-                var oJson = (JsonObject)json;
-                return ((JsonNumber)oJson["code"]).ToInt32();
+                var oJson = (JObject)json;
+                return oJson["code"].ToObject<Int32>();
             }
             catch
             {
