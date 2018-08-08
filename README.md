@@ -35,7 +35,7 @@ Console.WriteLine("Found Checksum:{0} Path:{1} Size:{2}", result.Checksum, resul
 
 ### Supported Api Methods
 
-- CopyFile
+- CopyFile (Deprecated)
 - DeleteDir
 - DeleteFile
 - DeleteObject
